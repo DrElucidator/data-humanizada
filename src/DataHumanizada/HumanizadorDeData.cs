@@ -38,9 +38,30 @@ public static class HumanizadorDeData
         if (dias == 1)
             return "Um dia atrás";
 
+        if (dias is >= 7 and <= 28)
+        {
+            int semanas = dias / 7;
+            string semanasPorExtenso = ConverterSemanasPorExtenso(semanas);
+            string unidadeSemanas = semanas == 1 ? "semana" : "semanas";
+
+            return $"{semanasPorExtenso} {unidadeSemanas} atrás";
+        }
+
         string diasPorExtenso = ConverterDiasPorExtenso(dias);
 
         return $"{diasPorExtenso} dias atrás";
+    }
+
+    private static string ConverterSemanasPorExtenso(int semanas)
+    {
+        return semanas switch
+        {
+            1 => "Uma",
+            2 => "Duas",
+            3 => "Três",
+            4 => "Quatro",
+            _ => throw new NotImplementedException()
+        };
     }
 
     private static string ConverterDiasPorExtenso(int dias)

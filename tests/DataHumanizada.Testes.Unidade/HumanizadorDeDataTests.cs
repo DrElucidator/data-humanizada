@@ -148,4 +148,25 @@ public sealed class HumanizadorDeDataTests
         // Asserção
         Assert.AreEqual(resultadoEsperado, resultado);
     }
+
+    [TestMethod]
+    [DataRow(1, "Uma semana atrás")]
+    [DataRow(2, "Duas semanas atrás")]
+    [DataRow(3, "Três semanas atrás")]
+    [DataRow(4, "Quatro semanas atrás")]
+    public void Humanizar_SemanasCompletas_DeveRetornar_SemanasAtras(
+        int quantidadeDeSemanas,
+        string resultadoEsperado
+    )
+    {
+        // Arranjo
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+        DateTime dataInformada = dataAtual.AddDays(-(quantidadeDeSemanas * 7));
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual(resultadoEsperado, resultado);
+    }
 }
