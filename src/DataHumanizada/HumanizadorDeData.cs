@@ -39,8 +39,33 @@ public static class HumanizadorDeData
         {
             string anosPorExtenso = ConverterAnosPorExtenso(anos);
             string unidadeAnos = anos == 1 ? "ano" : "anos";
+            string descricaoAnos = $"{anosPorExtenso} {unidadeAnos}";
 
-            return $"{anosPorExtenso} {unidadeAnos} atrás";
+            DateTime dataAposAnos = dataInformada.AddYears(anos);
+            int mesesRestantesAposAnos = CalcularMesesCompletos(dataAposAnos, dataAtual);
+
+            if (mesesRestantesAposAnos > 0)
+            {
+                string mesesPorExtenso = ConverterMesesPorExtenso(mesesRestantesAposAnos)
+                    .ToLowerInvariant();
+                string unidadeMeses = mesesRestantesAposAnos == 1 ? "mês" : "meses";
+
+                return $"{descricaoAnos} e {mesesPorExtenso} {unidadeMeses} atrás";
+            }
+
+            int diasRestantesAposAnos = (dataAtual - dataAposAnos).Days;
+
+            if (diasRestantesAposAnos >= 7)
+            {
+                int semanasRestantes = diasRestantesAposAnos / 7;
+                string semanasPorExtenso = ConverterSemanasPorExtenso(semanasRestantes)
+                    .ToLowerInvariant();
+                string unidadeSemanas = semanasRestantes == 1 ? "semana" : "semanas";
+
+                return $"{descricaoAnos} e {semanasPorExtenso} {unidadeSemanas} atrás";
+            }
+
+            return $"{descricaoAnos} atrás";
         }
 
         int meses = CalcularMesesCompletos(dataInformada, dataAtual);
@@ -111,6 +136,7 @@ public static class HumanizadorDeData
         return anos switch
         {
             1 => "Um",
+            2 => "Dois",
             10 => "Dez",
             _ => throw new NotImplementedException()
         };
