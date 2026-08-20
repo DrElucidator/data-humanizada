@@ -279,4 +279,23 @@ public sealed class HumanizadorDeDataTests
         // Asserção
         Assert.AreEqual(resultadoEsperado, resultado);
     }
+
+    [TestMethod]
+    [DataRow(2026, 6, 19)]
+    [DataRow(2030, 1, 1)]
+    public void Humanizar_DataFutura_DeveLancar_ExcecaoDeArgumento(
+        int ano,
+        int mes,
+        int dia
+    )
+    {
+        // Arranjo
+        DateTime dataInformada = new(ano, mes, dia, 0, 0, 0);
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+
+        // Ação / Asserção
+        Assert.ThrowsExactly<ArgumentException>(
+            () => HumanizadorDeData.Humanizar(dataInformada, dataAtual)
+        );
+    }
 }

@@ -4,6 +4,14 @@ public static class HumanizadorDeData
 {
     public static string Humanizar(DateTime dataInformada, DateTime dataAtual)
     {
+        if (dataInformada > dataAtual)
+        {
+            throw new ArgumentException(
+                "A data informada não pode ser posterior à data atual.",
+                nameof(dataInformada)
+            );
+        }
+
         TimeSpan tempoDecorrido = dataAtual - dataInformada;
 
         if (tempoDecorrido == TimeSpan.Zero)
