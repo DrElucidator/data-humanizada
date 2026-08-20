@@ -25,9 +25,34 @@ public static class HumanizadorDeData
             return $"Há {minutos} {unidadeMinutos}";
         }
 
-        int horas = (int)tempoDecorrido.TotalHours;
-        string unidadeHoras = horas == 1 ? "hora" : "horas";
+        if (tempoDecorrido.TotalDays < 1)
+        {
+            int horas = (int)tempoDecorrido.TotalHours;
+            string unidadeHoras = horas == 1 ? "hora" : "horas";
 
-        return $"Há {horas} {unidadeHoras}";
+            return $"Há {horas} {unidadeHoras}";
+        }
+
+        int dias = (int)tempoDecorrido.TotalDays;
+
+        if (dias == 1)
+            return "Um dia atrás";
+
+        string diasPorExtenso = ConverterDiasPorExtenso(dias);
+
+        return $"{diasPorExtenso} dias atrás";
+    }
+
+    private static string ConverterDiasPorExtenso(int dias)
+    {
+        return dias switch
+        {
+            2 => "Dois",
+            3 => "Três",
+            4 => "Quatro",
+            5 => "Cinco",
+            6 => "Seis",
+            _ => throw new NotImplementedException()
+        };
     }
 }

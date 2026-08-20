@@ -99,4 +99,53 @@ public sealed class HumanizadorDeDataTests
         // Asserção
         Assert.AreEqual("Há 1 hora", resultado);
     }
+
+    [TestMethod]
+    public void Humanizar_UmDiaAntes_DeveRetornar_UmDiaAtras()
+    {
+        // Arranjo
+        DateTime dataInformada = new(2026, 6, 17, 0, 0, 0);
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual("Um dia atrás", resultado);
+    }
+
+    [TestMethod]
+    public void Humanizar_DoisDiasAntes_DeveRetornar_DoisDiasAtras()
+    {
+        // Arranjo
+        DateTime dataInformada = new(2026, 6, 16, 0, 0, 0);
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual("Dois dias atrás", resultado);
+    }
+
+    [TestMethod]
+    [DataRow(3, "Três dias atrás")]
+    [DataRow(4, "Quatro dias atrás")]
+    [DataRow(5, "Cinco dias atrás")]
+    [DataRow(6, "Seis dias atrás")]
+    public void Humanizar_DiasCompletosAntesDeUmaSemana_DeveRetornar_DiasAtras(
+        int quantidadeDeDias,
+        string resultadoEsperado
+    )
+    {
+        // Arranjo
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+        DateTime dataInformada = dataAtual.AddDays(-quantidadeDeDias);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual(resultadoEsperado, resultado);
+    }
 }
