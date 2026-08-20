@@ -298,4 +298,29 @@ public sealed class HumanizadorDeDataTests
             () => HumanizadorDeData.Humanizar(dataInformada, dataAtual)
         );
     }
+
+    [TestMethod]
+    [DataRow(2026, 6, 17, 23, 58, 1, "Há 1 minuto")]
+    [DataRow(2026, 6, 17, 22, 0, 1, "Há 1 hora")]
+    [DataRow(2026, 5, 12, 0, 0, 0, "Um mês e seis dias atrás")]
+    public void Humanizar_PeriodoComUnidadeIncompleta_NaoDeveArredondar(
+        int ano,
+        int mes,
+        int dia,
+        int hora,
+        int minuto,
+        int segundo,
+        string resultadoEsperado
+    )
+    {
+        // Arranjo
+        DateTime dataInformada = new(ano, mes, dia, hora, minuto, segundo);
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual(resultadoEsperado, resultado);
+    }
 }
