@@ -9,9 +9,17 @@ public static class HumanizadorDeData
         if (tempoDecorrido == TimeSpan.Zero)
             return "Agora mesmo";
 
-        int segundos = (int)tempoDecorrido.TotalSeconds;
-        string unidade = segundos == 1 ? "segundo" : "segundos";
+        if (tempoDecorrido.TotalMinutes < 1)
+        {
+            int segundos = (int)tempoDecorrido.TotalSeconds;
+            string unidadeSegundos = segundos == 1 ? "segundo" : "segundos";
 
-        return $"Há {segundos} {unidade}";
+            return $"Há {segundos} {unidadeSegundos}";
+        }
+
+        int minutos = (int)tempoDecorrido.TotalMinutes;
+        string unidadeMinutos = minutos == 1 ? "minuto" : "minutos";
+
+        return $"Há {minutos} {unidadeMinutos}";
     }
 }
