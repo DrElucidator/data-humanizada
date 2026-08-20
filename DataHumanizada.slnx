@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DataHumanizada/DataHumanizada.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DataHumanizada.Testes.Unidade/DataHumanizada.Testes.Unidade.csproj" />
+  </Folder>
+</Solution>

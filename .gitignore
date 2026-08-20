@@ -1,0 +1,19 @@
+## Build results
+[Bb]in/
+[Oo]bj/
+
+## Visual Studio
+.vs/
+*.user
+*.suo
+
+## Visual Studio Code
+.vscode/
+
+## JetBrains Rider
+.idea/
+*.sln.iml
+
+## Test results
+TestResults/
+
