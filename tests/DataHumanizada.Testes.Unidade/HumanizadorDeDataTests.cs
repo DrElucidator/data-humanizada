@@ -29,4 +29,18 @@ public sealed class HumanizadorDeDataTests
         // Asserção
         Assert.AreEqual("Há 30 segundos", resultado);
     }
+
+    [TestMethod]
+    public void Humanizar_UmSegundoAntes_DeveRetornar_HaUmSegundo()
+    {
+        // Arranjo
+        DateTime dataInformada = new(2026, 6, 17, 23, 59, 59);
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual("Há 1 segundo", resultado);
+    }
 }

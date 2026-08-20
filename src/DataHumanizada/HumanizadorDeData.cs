@@ -10,7 +10,8 @@ public static class HumanizadorDeData
             return "Agora mesmo";
 
         int segundos = (int)tempoDecorrido.TotalSeconds;
+        string unidade = segundos == 1 ? "segundo" : "segundos";
 
-        return $"Há {segundos} segundos";
+        return $"Há {segundos} {unidade}";
     }
 }
