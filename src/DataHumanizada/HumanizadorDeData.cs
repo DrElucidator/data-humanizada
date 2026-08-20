@@ -33,6 +33,16 @@ public static class HumanizadorDeData
             return $"Há {horas} {unidadeHoras}";
         }
 
+        int anos = CalcularAnosCompletos(dataInformada, dataAtual);
+
+        if (anos > 0)
+        {
+            string anosPorExtenso = ConverterAnosPorExtenso(anos);
+            string unidadeAnos = anos == 1 ? "ano" : "anos";
+
+            return $"{anosPorExtenso} {unidadeAnos} atrás";
+        }
+
         int meses = CalcularMesesCompletos(dataInformada, dataAtual);
 
         if (meses > 0)
@@ -84,6 +94,26 @@ public static class HumanizadorDeData
         string diasPorExtenso = ConverterDiasPorExtenso(dias);
 
         return $"{diasPorExtenso} dias atrás";
+    }
+
+    private static int CalcularAnosCompletos(DateTime dataInformada, DateTime dataAtual)
+    {
+        int anos = dataAtual.Year - dataInformada.Year;
+
+        if (dataInformada.AddYears(anos) > dataAtual)
+            anos--;
+
+        return anos;
+    }
+
+    private static string ConverterAnosPorExtenso(int anos)
+    {
+        return anos switch
+        {
+            1 => "Um",
+            10 => "Dez",
+            _ => throw new NotImplementedException()
+        };
     }
 
     private static int CalcularMesesCompletos(DateTime dataInformada, DateTime dataAtual)

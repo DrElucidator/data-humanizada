@@ -216,4 +216,23 @@ public sealed class HumanizadorDeDataTests
         // Asserção
         Assert.AreEqual("Um mês e dois dias atrás", resultado);
     }
+
+    [TestMethod]
+    [DataRow(1, "Um ano atrás")]
+    [DataRow(10, "Dez anos atrás")]
+    public void Humanizar_AnosCompletos_DeveRetornar_AnosAtras(
+        int quantidadeDeAnos,
+        string resultadoEsperado
+    )
+    {
+        // Arranjo
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+        DateTime dataInformada = dataAtual.AddYears(-quantidadeDeAnos);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual(resultadoEsperado, resultado);
+    }
 }
