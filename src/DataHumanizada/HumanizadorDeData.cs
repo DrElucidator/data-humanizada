@@ -17,9 +17,17 @@ public static class HumanizadorDeData
             return $"Há {segundos} {unidadeSegundos}";
         }
 
-        int minutos = (int)tempoDecorrido.TotalMinutes;
-        string unidadeMinutos = minutos == 1 ? "minuto" : "minutos";
+        if (tempoDecorrido.TotalHours < 1)
+        {
+            int minutos = (int)tempoDecorrido.TotalMinutes;
+            string unidadeMinutos = minutos == 1 ? "minuto" : "minutos";
 
-        return $"Há {minutos} {unidadeMinutos}";
+            return $"Há {minutos} {unidadeMinutos}";
+        }
+
+        int horas = (int)tempoDecorrido.TotalHours;
+        string unidadeHoras = horas == 1 ? "hora" : "horas";
+
+        return $"Há {horas} {unidadeHoras}";
     }
 }
