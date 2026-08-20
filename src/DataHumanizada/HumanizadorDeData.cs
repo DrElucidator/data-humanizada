@@ -33,6 +33,40 @@ public static class HumanizadorDeData
             return $"Há {horas} {unidadeHoras}";
         }
 
+        int meses = CalcularMesesCompletos(dataInformada, dataAtual);
+
+        if (meses > 0)
+        {
+            string mesesPorExtenso = ConverterMesesPorExtenso(meses);
+            string unidadeMeses = meses == 1 ? "mês" : "meses";
+            string descricaoMeses = $"{mesesPorExtenso} {unidadeMeses}";
+
+            DateTime dataAposMeses = dataInformada.AddMonths(meses);
+            int diasRestantes = (dataAtual - dataAposMeses).Days;
+
+            if (diasRestantes >= 7)
+            {
+                int semanasRestantes = diasRestantes / 7;
+                string semanasPorExtenso = ConverterSemanasPorExtenso(semanasRestantes)
+                    .ToLowerInvariant();
+                string unidadeSemanas = semanasRestantes == 1 ? "semana" : "semanas";
+
+                return $"{descricaoMeses} e {semanasPorExtenso} {unidadeSemanas} atrás";
+            }
+
+            if (diasRestantes > 0)
+            {
+                string diasRestantesPorExtenso = diasRestantes == 1
+                    ? "um"
+                    : ConverterDiasPorExtenso(diasRestantes).ToLowerInvariant();
+                string unidadeDias = diasRestantes == 1 ? "dia" : "dias";
+
+                return $"{descricaoMeses} e {diasRestantesPorExtenso} {unidadeDias} atrás";
+            }
+
+            return $"{descricaoMeses} atrás";
+        }
+
         int dias = (int)tempoDecorrido.TotalDays;
 
         if (dias == 1)
@@ -50,6 +84,27 @@ public static class HumanizadorDeData
         string diasPorExtenso = ConverterDiasPorExtenso(dias);
 
         return $"{diasPorExtenso} dias atrás";
+    }
+
+    private static int CalcularMesesCompletos(DateTime dataInformada, DateTime dataAtual)
+    {
+        int meses = (dataAtual.Year - dataInformada.Year) * 12;
+        meses += dataAtual.Month - dataInformada.Month;
+
+        if (dataInformada.AddMonths(meses) > dataAtual)
+            meses--;
+
+        return meses;
+    }
+
+    private static string ConverterMesesPorExtenso(int meses)
+    {
+        return meses switch
+        {
+            1 => "Um",
+            2 => "Dois",
+            _ => throw new NotImplementedException()
+        };
     }
 
     private static string ConverterSemanasPorExtenso(int semanas)

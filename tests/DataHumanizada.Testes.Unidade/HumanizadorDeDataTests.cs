@@ -169,4 +169,51 @@ public sealed class HumanizadorDeDataTests
         // Asserção
         Assert.AreEqual(resultadoEsperado, resultado);
     }
+
+    [TestMethod]
+    [DataRow(1, "Um mês atrás")]
+    [DataRow(2, "Dois meses atrás")]
+    public void Humanizar_MesesCompletos_DeveRetornar_MesesAtras(
+        int quantidadeDeMeses,
+        string resultadoEsperado
+    )
+    {
+        // Arranjo
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+        DateTime dataInformada = dataAtual.AddMonths(-quantidadeDeMeses);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual(resultadoEsperado, resultado);
+    }
+
+    [TestMethod]
+    public void Humanizar_UmMesEUmaSemanaAntes_DeveRetornar_UmMesEUmaSemanaAtras()
+    {
+        // Arranjo
+        DateTime dataInformada = new(2026, 5, 11, 0, 0, 0);
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual("Um mês e uma semana atrás", resultado);
+    }
+
+    [TestMethod]
+    public void Humanizar_UmMesEDoisDiasAntes_DeveRetornar_UmMesEDoisDiasAtras()
+    {
+        // Arranjo
+        DateTime dataInformada = new(2026, 5, 16, 0, 0, 0);
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual("Um mês e dois dias atrás", resultado);
+    }
 }
