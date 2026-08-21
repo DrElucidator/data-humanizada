@@ -323,4 +323,32 @@ public sealed class HumanizadorDeDataTests
         // Asserção
         Assert.AreEqual(resultadoEsperado, resultado);
     }
+
+    [TestMethod]
+    [DataRow(2026, 1, 31, 2026, 2, 28, "Um mês atrás")]
+    [DataRow(2024, 1, 31, 2024, 2, 29, "Um mês atrás")]
+    [DataRow(2026, 4, 30, 2026, 5, 30, "Um mês atrás")]
+    [DataRow(2026, 5, 31, 2026, 6, 30, "Um mês atrás")]
+    [DataRow(2024, 2, 29, 2025, 2, 28, "Um ano atrás")]
+    [DataRow(2026, 1, 31, 2026, 2, 27, "Três semanas atrás")]
+    public void Humanizar_DatasEmDiferentesPeriodosDoCalendario_DeveConsiderar_DuracaoReal(
+        int anoInformado,
+        int mesInformado,
+        int diaInformado,
+        int anoAtual,
+        int mesAtual,
+        int diaAtual,
+        string resultadoEsperado
+    )
+    {
+        // Arranjo
+        DateTime dataInformada = new(anoInformado, mesInformado, diaInformado);
+        DateTime dataAtual = new(anoAtual, mesAtual, diaAtual);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual(resultadoEsperado, resultado);
+    }
 }
