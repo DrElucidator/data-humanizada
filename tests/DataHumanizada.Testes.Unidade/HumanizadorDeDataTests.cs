@@ -351,4 +351,21 @@ public sealed class HumanizadorDeDataTests
         // Asserção
         Assert.AreEqual(resultadoEsperado, resultado);
     }
+
+    [TestMethod]
+    public void Humanizar_PeriodoComTresUnidades_DeveRetornar_SomenteDuasUnidades()
+    {
+        // Arranjo
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+        DateTime dataInformada = dataAtual
+            .AddYears(-1)
+            .AddMonths(-2)
+            .AddDays(-7);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual("Um ano e dois meses atrás", resultado);
+    }
 }
