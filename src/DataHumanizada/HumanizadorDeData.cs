@@ -141,13 +141,7 @@ public static class HumanizadorDeData
 
     private static string ConverterAnosPorExtenso(int anos)
     {
-        return anos switch
-        {
-            1 => "Um",
-            2 => "Dois",
-            10 => "Dez",
-            _ => throw new NotImplementedException()
-        };
+        return ConverterComInicialMaiuscula(anos);
     }
 
     private static int CalcularMesesCompletos(DateTime dataInformada, DateTime dataAtual)
@@ -163,12 +157,7 @@ public static class HumanizadorDeData
 
     private static string ConverterMesesPorExtenso(int meses)
     {
-        return meses switch
-        {
-            1 => "Um",
-            2 => "Dois",
-            _ => throw new NotImplementedException()
-        };
+        return ConverterComInicialMaiuscula(meses);
     }
 
     private static string ConverterSemanasPorExtenso(int semanas)
@@ -177,22 +166,19 @@ public static class HumanizadorDeData
         {
             1 => "Uma",
             2 => "Duas",
-            3 => "Três",
-            4 => "Quatro",
-            _ => throw new NotImplementedException()
+            _ => ConverterComInicialMaiuscula(semanas)
         };
     }
 
     private static string ConverterDiasPorExtenso(int dias)
     {
-        return dias switch
-        {
-            2 => "Dois",
-            3 => "Três",
-            4 => "Quatro",
-            5 => "Cinco",
-            6 => "Seis",
-            _ => throw new NotImplementedException()
-        };
+        return ConverterComInicialMaiuscula(dias);
+    }
+
+    private static string ConverterComInicialMaiuscula(int numero)
+    {
+        string numeroPorExtenso = ConversorNumeroPorExtenso.Converter(numero);
+
+        return char.ToUpperInvariant(numeroPorExtenso[0]) + numeroPorExtenso[1..];
     }
 }
