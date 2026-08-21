@@ -368,4 +368,29 @@ public sealed class HumanizadorDeDataTests
         // Asserção
         Assert.AreEqual("Um ano e dois meses atrás", resultado);
     }
+
+    [TestMethod]
+    [DataRow(2026, 6, 17, 23, 59, 1, "Há 59 segundos")]
+    [DataRow(2026, 6, 17, 23, 1, 0, "Há 59 minutos")]
+    [DataRow(2026, 6, 17, 1, 0, 0, "Há 23 horas")]
+    public void Humanizar_LimiteSuperiorDaUnidade_DeveManter_UnidadeAtual(
+        int ano,
+        int mes,
+        int dia,
+        int hora,
+        int minuto,
+        int segundo,
+        string resultadoEsperado
+    )
+    {
+        // Arranjo
+        DateTime dataInformada = new(ano, mes, dia, hora, minuto, segundo);
+        DateTime dataAtual = new(2026, 6, 18, 0, 0, 0);
+
+        // Ação
+        string resultado = HumanizadorDeData.Humanizar(dataInformada, dataAtual);
+
+        // Asserção
+        Assert.AreEqual(resultadoEsperado, resultado);
+    }
 }
